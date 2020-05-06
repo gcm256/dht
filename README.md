@@ -15,7 +15,7 @@ docker run -it --rm -p 4466:8080 dht-app
 http://localhost:4455/dht-0.0.1-SNAPSHOT/get?key=zz
 http://localhost:4466/dht-0.0.1-SNAPSHOT/get?key=zz
 
-$ curl -H "Content-type: application/json" -XPOST http://localhost:4455/set/key -d ‘“value”’
+$ curl -H "Content-type: application/json" -XPOST http://localhost:4455/set/key -d "value"
 OK
-$ curl -H “Accept: application/json” http://localhost:4466/get/key
+$ curl -H "Accept: application/json" http://localhost:4466/get/key
 “value”
