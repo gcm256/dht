@@ -47,10 +47,10 @@ $ curl -H "Content-type: application/json" -XPOST http://localhost:4455/set/key 
 OK
 $ curl -H "Accept: application/json" http://localhost:4466/get/key
 value
-$ curl -H "Accept: application/json" -XPOST http://localhost:4455/set/key101 -d "value101"
-$ curl -H "Accept: application/json" -XPOST http://localhost:4455/set/key105 -d "value105"
-$ curl -H "Accept: application/json" -XPOST http://localhost:4466/set/key90 -d "value90"
-$ curl -H "Accept: application/json" -XPOST http://localhost:4466/set/key92 -d "value92"
+$ curl -H "Content-type: application/json" -XPOST http://localhost:4455/set/key101 -d "value101"
+$ curl -H "Content-type: application/json" -XPOST http://localhost:4455/set/key105 -d "value105"
+$ curl -H "Content-type: application/json" -XPOST http://localhost:4466/set/key90 -d "value90"
+$ curl -H "Content-type: application/json" -XPOST http://localhost:4466/set/key92 -d "value92"
 
 $ curl -H "Accept: application/json" http://localhost:4455/get/key101
 $ curl -H "Accept: application/json" http://localhost:4466/get/key101
