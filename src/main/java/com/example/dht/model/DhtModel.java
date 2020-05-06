@@ -57,11 +57,7 @@ public class DhtModel {
     private String getFromNode(String key, String nodeUrl) {
         String uri = "http://"+nodeUrl+"/get/{keyName}";
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
-        SimpleClientHttpRequestFactory rf =
-                (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(1 * 1000);
-        rf.setConnectTimeout(1 * 1000);
+        configureRestTemplate(restTemplate);
         ResponseEntity<String> responseEntity = null;
         String result = null;
         try {
@@ -80,11 +76,7 @@ public class DhtModel {
     private void setToNode(String key, String value, String nodeUrl) {
         String uri = "http://"+nodeUrl+"/set/{keyName}";
         RestTemplate restTemplate = new RestTemplate();
-        restTemplate.setErrorHandler(new DefaultResponseErrorHandler());
-        SimpleClientHttpRequestFactory rf =
-                (SimpleClientHttpRequestFactory) restTemplate.getRequestFactory();
-        rf.setReadTimeout(1 * 1000);
-        rf.setConnectTimeout(1 * 1000);
+        configureRestTemplate(restTemplate);
         try {
             restTemplate.exchange(uri, HttpMethod.POST, getHttpEntity(value), String.class, key);
         }
@@ -94,6 +86,14 @@ public class DhtModel {
         catch (RestClientException e) {
 
         }
+    }
+
+    private static void configureRestTemplate(RestTemplate r) {
+        r.setErrorHandler(new DefaultResponseErrorHandler());
+        SimpleClientHttpRequestFactory rf =
+                (SimpleClientHttpRequestFactory) r.getRequestFactory();
+        rf.setReadTimeout(1 * 1000);
+        rf.setConnectTimeout(1 * 1000);
     }
 
     private static HttpEntity<String> getHttpEntity(String body) {
