@@ -30,7 +30,6 @@ the `docker inspect <container-id> | grep -i ipaddress` to find the docker netwo
 The port will be 8080 for all, since each container is running the image on 8080.
 For each node, run the following api telling it about all its peers:
 
-```
 eg, if my nodes are localhost:4455 and localhost:4466, and they have docker network ip 172.17.0.2 and 172.17.0.3 respectively, 
 we tell node1 about node2's (docker) host, port and vice versa. We run:
 ```
@@ -60,3 +59,7 @@ $ curl -H "Accept: application/json" http://localhost:4455/get/keyfoo
 $ curl -H "Accept: application/json" http://localhost:4466/get/keyfoo
 ```
 
+**TODO:**   
+1. Replicate on late joining nodes.
+2. Unit tets.
+3. JVM resource mgmt for node performance.
