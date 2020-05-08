@@ -62,5 +62,4 @@ $ curl -H "Accept: application/json" http://localhost:4466/get/keyfoo
 
 **TODO:**   
 1. Replicate on late joining nodes.
-2. Unit tets.
-3. JVM resource mgmt for node performance.
+2. JVM resource mgmt for node performance.

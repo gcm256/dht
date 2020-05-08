@@ -17,6 +17,9 @@ public class DhtControllerTests {
     //@Autowired
     private RestTemplate restTemplate;
 
+    @Autowired
+    private DhtModel dhtModel;
+
     @LocalServerPort
     private int port;
 
@@ -32,25 +35,22 @@ public class DhtControllerTests {
     }
 
     @Test
-    public void testGetEmptyDht() throws Exception {
+    public void testGetNonExistentKey() throws Exception {
         restTemplate = new RestTemplate();
-        Assertions.assertThat(this.restTemplate
-                                      .getForObject("http://localhost:"
-                                                            + port
-                                                            + "/get/key1"
-                                              , String.class))
-                .isNull();
+        String uri = "http://localhost:"+port+"/get/key2";
+        Assertions.assertThat(this.restTemplate.getForObject(uri, String.class)).isNull();
     }
 
-    //@Test
+    @Test
     public void testGetAfterSet() throws Exception {
         restTemplate = new RestTemplate();
         String key = "key1", value = "value1";
         String setUri = "http://localhost:" + port + "/set/{keyName}";
         String getUri = "http://localhost:" + port + "/get/"+key;
+        //dhtModel.set(key, value);
+        //Assertions.assertThat(dhtModel.get(key)).isEqualTo(value);
         this.restTemplate.exchange(setUri, HttpMethod.POST, getHttpEntity(value), String.class, key);
-        Assertions.assertThat(this.restTemplate.getForObject(getUri, String.class))
-                .isEqualTo(value);
+        Assertions.assertThat(this.restTemplate.getForObject(getUri, String.class)).isEqualTo(value);
     }
 
     @Test
@@ -63,6 +63,13 @@ public class DhtControllerTests {
                                               HttpMethod.POST,
                                               getHttpEntity(value), String.class, key)
                                       .getBody()).isEqualTo("OK\n");
+    }
+
+    @Test
+    public void testAddNode() throws Exception {
+        restTemplate = new RestTemplate();
+        String uri = "http://localhost:" + port + "/addNode?host=172.17.0.10&port=9090";
+        Assertions.assertThat(this.restTemplate.getForObject(uri, String.class)).isEqualTo("OK\n");
     }
 
     private static HttpEntity<String> getHttpEntity(String body) {
